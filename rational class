@@ -1,0 +1,120 @@
+#include<iostream>
+using namespace std;
+int gcd(int n1, int n2) {
+	while (n2 != 0) {
+		int temp = n2;
+		n2 = n1 % n2;
+		n1 = temp;
+	}
+	return n1;
+}
+class Rational {
+private:
+	int num;
+	int denom;
+public:
+	Rational(int n, int d) {
+
+		if (d == 0) {
+			d = 1;
+			cout << "0 in Denominator has been replaced by 1. " << endl;
+		}
+
+		denom = d / gcd(n, d);
+
+		num = n / gcd(n, d);
+
+
+	}
+	int getNum() {
+		return num;
+	}
+	int getDenom() {
+		return denom;
+	}
+	Rational operator +(Rational r) {
+		int n, d;
+		if (denom != r.denom) {
+			 n = (num * r.denom) + (r.num * denom);
+			 d = denom * r.denom;
+		}
+		else {
+			n = num + r.num;
+			d = denom;
+		}
+		return Rational(n, d);
+	}
+	Rational operator -(Rational r) {
+		int n = (num * r.denom) - (r.num * denom);
+		int d = denom * r.denom;
+		return Rational(n, d);
+	}
+	Rational operator *(Rational r) {
+		int n = r.num * num;
+		int d = r.denom * denom;
+		return Rational(n,d);
+
+	}
+	Rational operator /(Rational r) {
+		int n = num  *r.denom;
+		int d = denom *r.num ;
+		return Rational(n,d);
+	}
+	bool operator ==(Rational r) {
+		if (num == r.num) {
+			if (denom == r.denom) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+
+	}
+	bool operator >(Rational r) {
+		float simp1, simp2;
+		simp1 = num / denom;
+		simp2= r.num / r.denom;
+		if (simp1 > simp2) {
+		
+		}
+		else {
+			return false;
+		}
+	}
+	Rational& operator=(const Rational& r) {
+	
+			num = r.num;
+			denom = r.denom;
+		return *this;
+	}
+	 
+};
+int main() {
+	Rational r1(3, 200), r2(2, 5), res(0, 1);
+	if (r1 > r2) {
+		cout << "Lets Gooooo" << endl;
+	}
+	else {
+		cout << "Lets not Bro" << endl;
+	}
+
+	return 0;
+}
+/*
+res = r1 + r2;
+cout << "SUM:" << endl;
+cout << "Num :" << res.getNum() << "\nDenom :" << res.getDenom() << endl;
+cout << "SUBTRACTION:" << endl;
+res = r1 - r2;
+cout << "Num :" << res.getNum() << "\nDenom :" << res.getDenom() << endl;
+cout << "Multiplication:" << endl;
+res = r1 * r2;
+cout << "Num :" << res.getNum() << "\nDenom :" << res.getDenom() << endl;
+cout << "Division:" << endl;
+res = r1 / r2;
+cout << "Num :" << res.getNum() << "\nDenom :" << res.getDenom() << endl;
+*/
